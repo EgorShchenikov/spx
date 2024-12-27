@@ -1,0 +1,8 @@
+requests==2.32.3
+beautifulsoup4==4.12.3
+logging==0.4.9.6
+DateTime==5.5
+parse==1.20.2
+pandas==2.2.3
+openpyxl==3.1.5
+xlrd==2.0.1
