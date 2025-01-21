@@ -11,6 +11,17 @@ import xlsxwriter
 import time
 import shutil
 
+from pathlib import Path
+import sys
+
+# Определяем базовую директорию, где находится exe или скрипт
+if getattr(sys, 'frozen', False):
+    # Программа запущена из exe
+    BASE_DIR = Path(sys.executable).parent
+else:
+    # Программа запущена как скрипт
+    BASE_DIR = Path(__file__).resolve().parent
+
 # Создаем основной интерфейс
 def start_parsing():
     try:
@@ -38,7 +49,7 @@ def start_parsing():
 # Основная логика парсинга
 def run_parser(end_date_user):
     # Настройка логирования
-    log_file = Path(__file__).resolve().parent / 'log.txt'
+    log_file = BASE_DIR / 'log.txt'
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
@@ -56,7 +67,7 @@ def run_parser(end_date_user):
 
     # Создание папки для загрузок с очисткой
     def ensure_output_folder(folder_name):
-        folder_path = Path(__file__).resolve().parent / folder_name
+        folder_path = BASE_DIR / folder_name
         if folder_path.exists():
             logging.info(f'Очищаем папку для сохранения файлов: {folder_path}')
             shutil.rmtree(folder_path)  # Очищаем папку
@@ -155,7 +166,9 @@ def run_parser(end_date_user):
             return []
 
     try:
-        workbook = xlsxwriter.Workbook(f"Итоги торгов {end_date_user}-{current_end_date}.xlsx")
+        # Формируем путь к выходному Excel-файлу в текущей директории
+        output_excel_path = BASE_DIR / f"Итоги торгов {end_date_user}-{current_end_date}.xlsx"
+        workbook = xlsxwriter.Workbook(output_excel_path)
     except Exception as e:
         logging.error(f"Ошибка при создании Excel-файла: {e}", exc_info=True)
         raise
@@ -197,7 +210,7 @@ def run_parser(end_date_user):
         workbook.close()
         raise
 
-    folder_path = Path("downloads")
+    folder_path = BASE_DIR / 'downloads'
 
     try:
         files = [f.name for f in folder_path.iterdir() if f.is_file()]
@@ -277,5 +290,3 @@ result_label.pack(pady=10)
 
 # Запуск интерфейса
 root.mainloop()
-
-#pyinstaller --onefile --windowed --icon=icon.ico parser_spimex.py
