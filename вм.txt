@@ -1,0 +1,6 @@
+# Определяем базовую директорию
+def get_base_directory():
+    if getattr(sys, 'frozen', False):  # Если приложение скомпилировано в exe
+        return Path(sys.executable).parent
+    else:  # Если запускается как скрипт Python
+        return Path(__file__).resolve().parent
