@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import PhotoImage
 from datetime import datetime
 import logging
 import random
@@ -258,19 +257,8 @@ def run_parser(end_date_user):
 root = tk.Tk()
 root.title("Парсер торгов")
 root.config(bg="white")
-root.geometry("300x300")
+root.geometry("300x200")
 root.resizable(False, False)
-
-# Устанавливаем иконку для окна
-root.iconbitmap("Снимок экрана 2025-01-21 130225.ico") 
-
-# Добавляем изображение
-try:
-    image = PhotoImage(file="Снимок экрана 2025-01-21 130225.png")
-    image_label = tk.Label(root, image=image)
-    image_label.pack(padx=10, pady=10)
-except Exception as e:
-    logging.error(f"Ошибка при загрузке изображения: {e}")
 
 # Добавляем поле для ввода даты
 label = tk.Label(root, text="Введите конечную дату (дд.мм.гггг):", bg="white", font=("Arial", 12), fg="black")
@@ -289,3 +277,5 @@ result_label.pack(pady=10)
 
 # Запуск интерфейса
 root.mainloop()
+
+#pyinstaller --onefile --windowed --icon=icon.ico parser_spimex.py
