@@ -4,3 +4,5 @@ def get_base_directory():
         return Path(sys.executable).parent
     else:  # Если запускается как скрипт Python
         return Path(__file__).resolve().parent
+pyinstaller --onefile --windowed --icon=icon.ico parser_spimex.py
+pyinstaller --onefile --icon=icon.ico parser_spimex.py
