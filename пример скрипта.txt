@@ -1,0 +1,24 @@
+Пример скрипта:
+Section Access;
+LOAD ACCESS, USERID, PASSWORD, REGION
+INLINE [
+    ACCESS, USERID, PASSWORD, REGION
+    ADMIN, admin, admin123, *
+    USER, user1, user123, East
+    USER, user2, user456, West
+];
+
+Section Application;
+LOAD *
+INLINE [
+    REGION, Sales
+    East, 100
+    West, 200
+];
+Пользователь admin видит все данные.
+Пользователь user1 видит только строки, связанные с регионом East.
+Типы пользователей:
+
+ADMIN: Имеет полный доступ к данным и структуре приложения.
+USER: Ограничен в доступе к данным и возможностям работы с приложением.
+Фильтрация данных (Reduction): Доступ к строкам данных ограничивается на основе полей, связанных с пользователем (например, REGION).
